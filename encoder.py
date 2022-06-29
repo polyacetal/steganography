@@ -1,33 +1,75 @@
 import sys
+import math
 from PIL import Image
 import numpy as np
 
 def Main():
     args = sys.argv
     print(args[1])
-    img = Image.open(args[1])
+    print(args[2])
+    img1 = np.array(Image.open(args[1]))
+    img2 = np.array(Image.open(args[2]))
+    img3 = img2
 
-    width, height = img.size
+    img_print = Image.fromarray(img1)
+    print("import img success")
+    img_print.show()
+    img1 = MonoImg(img1)
+    img_print = Image.fromarray(img1)
+    print("mono img success")
+    img_print.show()
+    img1 = EvenImg(img1)
+    img_print = Image.fromarray(img1)
+    print("even img success")
+    img_print.show()
+    img2 = OneImg(img2)
+    img_print = Image.fromarray(img2)
+    print("one img success")
+    img_print.show()
+    img3 = MergeImg(img1,img2)
+    img_print = Image.fromarray(img3)
+    print("merge img success")
+    img_print.show()
+    img_print.save('hiden.png')
 
-    img2 = Image.new('RGB', (width, height))
+def MonoImg(img):
+    m, n, nch = img.shape
+    for x in range(m):
+        for y in range(n):
+            gray = math.floor(img[x,y,0]*0.299 + img[x,y,1]*0.587 + img[x,y,2]*0.114)
+            img[x,y,0] = gray;
+            img[x,y,1] = gray;
+            img[x,y,2] = gray;
+    return img
 
-    img_pixels = Init_image(img, width, height)
+def EvenImg(img):
+    m, n, nch = img.shape
+    for x in range(m):
+        for y in range(n):
+            if img[x,y,0] % 2 == 1:
+                img[x,y,0] = img[x,y,0] - 1
+                img[x,y,1] = img[x,y,1] - 1
+                img[x,y,2] = img[x,y,2] - 1
+    return img
 
-    for y in range(height):
-        for x in range(width):
-            img2.putpixel((x, y), (255, 0, 255))
-    img2.show()
+def OneImg(img):
+    m, n, nch = img.shape
+    for x in range(m):
+        for y in range(n):
+            img[x,y,0] = img[x,y,0] / 255
+            img[x,y,1] = img[x,y,1] / 255
+            img[x,y,2] = img[x,y,2] / 255
+    return img
 
-def Init_image(img, width, height):
-    img_pixels = []
-    for y in range(height):
-        for x in range(width):
-            img_pixels.append(img.getpixel((x,y)))
-    img_pixels = np.array(img_pixels)
-    return(img_pixels)
-
-def Mono():
-    a = 1
+def MergeImg(img1,img2):
+    img3 = img1
+    m, n, nch = img1.shape
+    for x in range(m):
+        for y in range(n):
+            img3[x,y,0] = img1[x,y,0] + img2[x,y,0]
+            img3[x,y,1] = img1[x,y,1] + img2[x,y,1]
+            img3[x,y,2] = img1[x,y,2] + img2[x,y,2]
+    return img3
 
 if __name__ == "__main__":
     Main()
