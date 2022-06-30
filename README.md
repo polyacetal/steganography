@@ -8,4 +8,11 @@
 4.出力されたhiden.pngに暗号が隠されています  
 
 逆に暗号文を見たい場合は  
-$ python3 decoder.py hiden.png  を実行してください
+$ python3 decoder.py hiden.png  を実行してください  
+
+##必要なもの
+以下のものがない場合は適宜追加してください
+sys  
+math  
+numpy  
+numpy  
