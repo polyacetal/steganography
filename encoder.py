@@ -1,6 +1,8 @@
 import sys
 import math
 from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 import numpy as np
 
 def Main():
@@ -77,17 +79,17 @@ def AutoImageCreate(image_path,text):
     fontsize = 36
 
     # 画像サイズ，背景色，フォントの色を設定
-    img = PIL.Image.open(image_path)
+    img = Image.open(image_path)
     canvasSize = img.size
     backgroundRGB = (0, 0, 0)
     textRGB = (255, 255, 255)
 
     # 文字を描く画像の作成
-    img = PIL.Image.new('RGB', canvasSize, backgroundRGB)
-    draw = PIL.ImageDraw.Draw(img)
+    img = Image.new('RGB', canvasSize, backgroundRGB)
+    draw = ImageDraw.Draw(img)
 
     # 用意した画像に文字列を描く
-    font = PIL.ImageFont.truetype(ttfontname, fontsize)
+    font = ImageFont.truetype(ttfontname, fontsize)
     textWidth, textHeight = draw.textsize(text,font=font)
     textTopLeft = (canvasSize[0]//2-textWidth//2, canvasSize[1]//2-textHeight//2) 
     draw.text(textTopLeft, text, fill=textRGB, font=font)
