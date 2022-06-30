@@ -12,16 +12,14 @@ def Main():
     img2 = AutoImageCreate(args[1],args[2])
     img3 = img2
 
-    #img_print = Image.fromarray(img1)
-    #print("import img success")
-    #img_print.show()
-    img1 = img1.convert('L')
+    print("import img success")
     img1.show()
+    img1 = img1.convert('L')
     print("mono img success")
+    img1.show()
     img1 = EvenImg(img1)
-    img_print = Image.fromarray(img1)
     print("even img success")
-    img_print.show()
+    img1.show()
     img2 = OneImg(img2)
     img_print = Image.fromarray(img2)
     print("one img success")
@@ -32,24 +30,17 @@ def Main():
     img_print.show()
     img_print.save('hiden.png')
 
-def MonoImg(img):
-    m, n, nch = img.shape
-    for x in range(m):
-        for y in range(n):
-            gray = math.floor(img[x,y,0]*0.299 + img[x,y,1]*0.587 + img[x,y,2]*0.114)
-            img[x,y,0] = gray;
-            img[x,y,1] = gray;
-            img[x,y,2] = gray;
-    return img
 
 def EvenImg(img):
-    m, n, nch = img.shape
+    m, n = img.size
     for x in range(m):
         for y in range(n):
-            if img[x,y,0] % 2 == 1:
-                img[x,y,0] = img[x,y,0] - 1
-                img[x,y,1] = img[x,y,1] - 1
-                img[x,y,2] = img[x,y,2] - 1
+            print(img.getpixel((x,y)))
+            if r % 2 == 1:
+                r -= 1
+                g -= 1
+                b -= 1
+                img.putpixel((x,y),(r,g,b))
     return img
 
 def OneImg(img):
