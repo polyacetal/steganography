@@ -35,7 +35,7 @@ def EvenImg(img):
     m, n = img.size
     for x in range(m):
         for y in range(n):
-            print(img.getpixel((x,y)))
+            img.getpixel((x,y)))
             if r % 2 == 1:
                 r -= 1
                 g -= 1
