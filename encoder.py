@@ -8,34 +8,41 @@ def Main():
     args = sys.argv
     print(args[1])
     print(args[2])
-    img1 = Image.open(args[1])
+    img1 = Image.open(args[1]).convert('RGB')
     img2 = AutoImageCreate(args[1],args[2])
     img3 = img2
 
     print("import img success")
     img1.show()
-    img1 = img1.convert('L')
+    img1 = MonoImg(img1)
     print("mono img success")
     img1.show()
     img1 = EvenImg(img1)
     print("even img success")
     img1.show()
     img2 = OneImg(img2)
-    img_print = Image.fromarray(img2)
     print("one img success")
-    img_print.show()
+    img2.show()
     img3 = MergeImg(img1,img2)
-    img_print = Image.fromarray(img3)
     print("merge img success")
-    img_print.show()
-    img_print.save('hiden.png')
+    img3.show()
+    img3.save('hiden.png')
 
+def MonoImg(img):
+    m, n = img.size
+    print(m,n)
+    for x in range(m):
+        for y in range(n):
+            r, g, b = img.getpixel((x,y))
+            gray = math.floor(r*0.299+g*0.587+b*0.114)
+            img.putpixel((x,y),(gray,gray,gray))
+    return img
 
 def EvenImg(img):
     m, n = img.size
     for x in range(m):
         for y in range(n):
-            img.getpixel((x,y)))
+            r, g, b = img.getpixel((x,y))
             if r % 2 == 1:
                 r -= 1
                 g -= 1
@@ -44,28 +51,33 @@ def EvenImg(img):
     return img
 
 def OneImg(img):
-    m, n, nch = img.shape
+    m, n = img.size
     for x in range(m):
         for y in range(n):
-            img[x,y,0] = img[x,y,0] / 255
-            img[x,y,1] = img[x,y,1] / 255
-            img[x,y,2] = img[x,y,2] / 255
+            r, g, b = img.getpixel((x,y))
+            r = int(r / 255)
+            g = int(g / 255)
+            b = int(b / 255)
+            img.putpixel((x,y),(r,g,b))
     return img
 
 def MergeImg(img1,img2):
     img3 = img1
-    m, n, nch = img1.shape
+    m, n = img1.size
     for x in range(m):
         for y in range(n):
-            img3[x,y,0] = img1[x,y,0] + img2[x,y,0]
-            img3[x,y,1] = img1[x,y,1] + img2[x,y,1]
-            img3[x,y,2] = img1[x,y,2] + img2[x,y,2]
+            r1, g1, b1 = img1.getpixel((x,y))
+            r2, g2, b2 = img2.getpixel((x,y))
+            r3 = r1 + r2
+            g3 = g1 + g2
+            b3 = b1 + b2
+            img3.putpixel((x,y),(r3,g3,b3))
     return img3
 
 def AutoImageCreate(image_path,text):
     # 使うフォント，サイズ，描くテキストの設定
     ttfontname = "/usr/share/fonts/fonts-go/Go-Mono-Bold.ttf"
-    fontsize = 36
+    fontsize = 100
 
     # 画像サイズ，背景色，フォントの色を設定
     img = Image.open(image_path)
