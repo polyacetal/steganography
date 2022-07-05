@@ -76,7 +76,7 @@ def MergeImg(img1,img2):
 
 def AutoImageCreate(image_path,text):
     # 使うフォント，サイズ，描くテキストの設定
-    ttfontname = "/usr/share/fonts/fonts-go/Go-Mono-Bold.ttf"
+    ttfontname = "C:/Windows/Fonts/msgothic.ttc"
     fontsize = 100
 
     # 画像サイズ，背景色，フォントの色を設定
@@ -92,11 +92,10 @@ def AutoImageCreate(image_path,text):
     # 用意した画像に文字列を描く
     font = ImageFont.truetype(ttfontname, fontsize)
     textWidth, textHeight = draw.textsize(text,font=font)
-    textTopLeft = (canvasSize[0]//2-textWidth//2, canvasSize[1]//2-textHeight//2) 
+    textTopLeft = (canvasSize[0]//2-textWidth//2, canvasSize[1]//2-textHeight//2)
     draw.text(textTopLeft, text, fill=textRGB, font=font)
 
     return img
 
 if __name__ == "__main__":
     Main()
-
