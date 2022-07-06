@@ -12,14 +12,11 @@ def Main():
     img2 = AutoImageCreate(args[1], args[2])
 
     print("import img success")
-    img1.show()
     img1 = EvenImg(img1)
     print("even img success")
-    img1.show()
     img1 = MergeImg(img1,img2)
     print("merge img success")
-    img1.show()
-    img1.save('hiden.png')
+    img1.save('hidden.png')
 
 def EvenImg(img):
     r,g,b = img.split()
