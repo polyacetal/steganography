@@ -14,5 +14,4 @@ $ python3 decoder.py hiden.png  を実行してください
 以下のものがない場合は適宜追加してください  
 sys  
 math  
-numpy  
-numpy  
+PIL
