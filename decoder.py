@@ -8,11 +8,9 @@ def Main():
 
     img = img.point(lambda x: x%2)
     print("modulo img success")
-    img.show()
     img.save('appear_key.png')
     img = img.point(lambda x: x*255).convert("RGB")
     print("x255 img success")
-    img.show()
     img.save('appear_key.png')
 
 
